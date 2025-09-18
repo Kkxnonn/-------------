@@ -1,230 +1,167 @@
-function numberClicked(number) {
-  console.log(number);
-}
-
-function operatorClicked(operator) {
-  console.log(operator);
-}
-
-function equalClicked() {
-  console.log("=");
-}
-
-function ceClicked() {
-  console.log("ce");
-}
-
-function checkKeyboard(event) {
-  // console.log(Number(event.key));
-  if (event.key >= "0" && event.key <= "9") {
-    numberClicked(Number(event.key));
-  } else if (event.key == ".") {
-    decimalPressed();
-  } else if (event.key.match(/^[-*+/]$/)) {
-    operatorClicked(event.key);
-  } else if (event.key == "=") {
-    equalClicked();
-  } else if (event.key == "Escape") {
-    ceClicked();
-  }
-}
-
+let display = "0";
+let firstNumber = null;
+let lastOperation = "?";
+let state = "S0";
 document.addEventListener("DOMContentLoaded", () => {
-  // create keyboard event
-  document.addEventListener("keydown", checkKeyboard);
+   //รับค่าจากคีย์บอร์ด เก็บค่าไว้ที่e 
+  document.addEventListener("keydown", (e) => {
+    if (e.key >= 0 && e.key <= 9) {
+      numberClick(Number(e.key));
+    } else if (e.key == "Backspace") {
+      Clear();
+    } else if (e.key == "+" || e.key == "=") {
+      Operation("+");
+    } else if (e.key == "-") {
+      Operation("-");
+    } else if (e.key === "Enter") {
+      Equal();
+    } else if (e.key == "*") {
+      Operation("*");
+    } else if (e.key == "/") {
+      Operation("/");
+    }
+  });
 });
 
-// function getValue() {
-//     return value;
+const numberClick = (number) => {
+
+  if (state == "S0") {
+    display = number.toString();
+    state = "S1";
+    
+  } else if (state == "S1") {
+    display += number.toString();
+  } else if (state == "S2") {
+    display = number.toString();
+    state = "S1";
+  }
+  UpdateDisplay();
+  console.log(display);
+};
+
+const UpdateDisplay = () => {
+  // Update screen
+  document.getElementById("display").innerHTML = display;
+  //   update color operation
+  document.getElementById("plus").classList.remove("bg-red-500");
+  document.getElementById("minus").classList.remove("bg-red-500");
+  document.getElementById("plus").classList.add("bg-green-500");
+  document.getElementById("minus").classList.add("bg-green-500");
+
+  //   update button
+  if (lastOperation === "+") {
+    document.getElementById("plus").classList.remove("bg-green-500");
+    document.getElementById("plus").classList.add("bg-red-500");
+  } else if (lastOperation === "-") {
+    document.getElementById("minus").classList.remove("bg-green-500");
+    document.getElementById("minus").classList.add("bg-red-500");
+  }
+};
+
+const Clear = () => {
+  display = "0";
+  state = "S0";
+  lastOperation = "?";
+  UpdateDisplay();
+};
+
+const Operation = (operator) => {
+  if (state == "S1") {
+    firstNumber = Number(display);
+    lastOperation = operator;
+    state = "S2";
+  }
+  UpdateDisplay();ห
+};
+
+const Equal = () => {
+  if (state == "S1") {
+    let secondNumber = Number(display);
+    if (lastOperation == "+") {
+      display = firstNumber + secondNumber;
+    }
+    if (lastOperation == "-") {
+      display = firstNumber - secondNumber;
+    }
+  }
+  if (state == "S2") {
+    if (lastOperation == "+") {
+      display = firstNumber + Number(display);
+    }
+    if (lastOperation == "-") {
+      display = firstNumber - Number(display);
+    }
+  }
+  UpdateDisplay();
+};
+
+
+
+// // global variable
+// let screen = '0';
+// let state = 'S0';
+ 
+
+// function updateScreen() {
+//     document.getElementById("screen").innerText = screen;
 // }
 
-// function setValue(n) {
-//     value = n;
-//     var displayValue = value;
-
-//     if (displayValue > 99999999) {
-//         displayValue = displayValue.toExponential(4);
-//     } else if (displayValue < -99999999) {
-//         displayValue = displayValue.toExponential(4);
-//     } else if (displayValue > 0 && displayValue < 0.0000001) {
-//         displayValue = displayValue.toExponential(4);
-//     } else if (displayValue < 0 && displayValue > -0.0000001) {
-//         displayValue = displayValue.toExponential(3);
+// function numberClicked(number) {
+//   console.log(number);
+//   if (state === 'S0'){
+//     screen = number.toString;
+//     state = 'S0';
+//   } else if (state === 'S1') {
+//     if (screen.length < 9) 
+//     screen = screen + number.toString();
+//     // state = 'S1';
 //     }
 
-//     var chars = displayValue.toString().split("");
-//     var html = "";
-
-//     for (var c of chars) {
-//         if (c == '-') {
-//             html += "<span class=\"resultchar negative\">" + c + "</span>";
-//         } else if (c == '.') {
-//             html += "<span class=\"resultchar decimal\">" + c + "</span>";
-//         } else if (c == 'e') {
-//             html += "<span class=\"resultchar exponent\">e</span>";
-//         } else if (c != '+') {
-//             html += "<span class=\"resultchar digit" + c + "\">" + c + "</span>";
-//         }
-//     }
-
-//     document.getElementById("result").innerHTML = html;
+//   updateScreen();
 // }
 
-// function setError(n) {
-//     document.getElementById("result").innerHTML = "ERROR";
+// function operatorClicked(operator) {
+//   console.log(operator);
 // }
 
-// function setLoading(loading) {
-//     if (loading) {
-//         document.getElementById("loading").style.visibility = "visible";
-//     } else {
-//         document.getElementById("loading").style.visibility = "hidden";
-//     }
-
-//     var buttons = document.querySelectorAll("BUTTON");
-
-//     for (var i = 0; i < buttons.length; i++) {
-//         buttons[i].disabled = loading;
-//     }
+// function equalClicked() {
+//   console.log("=");
 // }
 
-// function clearPressed() {
-//     setValue(0);
-
-//     operand1 = 0;
-//     operand2 = 0;
-//     operation = null;
-//     state = states.start;
+// function ceClicked() {
+//   console.log("ce");
 // }
 
-// function clearEntryPressed() {
-//     setValue(0);
-//     state = (state == states.operand2) ? states.operator : states.start;
+// function checkKeyboard(event) {
+//   // console.log(Number(event.key));
+//   if (event.key >= "0" && event.key <= "9") 
+//   {
+//     numberClicked(Number(event.key));
+//   } 
+//   else if (event.key == ".") {
+//     operatorClicked(".");
+//   } 
+//   else if (event.key == "+" || event.key == "=") {
+//     operatorClicked("+");
+//   } 
+//   else if (event.key == "-") {
+//     operatorClicked("-");
+//   } 
+//   else if (event.key == "*") {
+//     operatorClicked("*");
+//   } 
+//   else if (event.key == "/") {
+//     operatorClicked("/");
+//   }
+//   else if (event.key == "Enter") {
+//     equalClicked();
+//   } 
+//   else if (event.key == "Escape") {
+//     ceClicked();
+//   }
 // }
 
-// function numberPressed(n) {
-//     var value = getValue();
-
-//     if (state == states.start || state == states.complete) {
-//         value = n;
-//         state = (n == '0' ? states.start : states.operand1);
-//     } else if (state == states.operator) {
-//         value = n;
-//         state = (n == '0' ? states.operator : states.operand2);
-//     } else if (value.replace(/[-\.]/g, '').length < 8) {
-//         value += n;
-//     }
-
-//     value += "";
-
-//     setValue(value);
-// }
-
-// function decimalPressed() {
-//     if (state == states.start || state == states.complete) {
-//         setValue('0.');
-//         state = states.operand1;
-//     } else if (state == states.operator) {
-//         setValue('0.');
-//         state = states.operand2;
-//     } else if (!getValue().toString().includes('.')) {
-//         setValue(getValue() + '.');
-//     }
-// }
-
-// function signPressed() {
-//     var value = getValue();
-
-//     if (value != 0) {
-//         setValue(-1 * value);
-//     }
-// }
-
-// function operationPressed(op) {
-//     operand1 = getValue();
-//     operation = op;
-//     state = states.operator;
-// }
-
-// function equalPressed() {
-//     if (state < states.operand2) {
-//         state = states.complete;
-//         return;
-//     }
-
-//     if (state == states.operand2) {
-//         operand2 = getValue();
-//         state = states.complete;
-//     } else if (state == states.complete) {
-//         operand1 = getValue();
-//     }
-
-//     calculate(operand1, operand2, operation);
-// }
-
-// // TODO: Add key press logics
-// document.addEventListener('keypress', (event) => {
-//     if (event.key.match(/^\d+$/)) {
-//         numberPressed(event.key);
-//     } else if (event.key == '.') {
-//         decimalPressed();
-//     } else if (event.key.match(/^[-*+/]$/)) {
-//         operationPressed(event.key);
-//     } else if (event.key == '=') {
-//         equalPressed();
-//     }
+// document.addEventListener("DOMContentLoaded", () => {
+//   // create keyboard event
+//   document.addEventListener("keydown", checkKeyboard);
 // });
-
-// function getValue() {
-//     return value;
-// }
-
-// function setValue(n) {
-//     value = n;
-//     var displayValue = value;
-
-//     if (displayValue > 99999999) {
-//         displayValue = displayValue.toExponential(4);
-//     } else if (displayValue < -99999999) {
-//         displayValue = displayValue.toExponential(4);
-//     } else if (displayValue > 0 && displayValue < 0.0000001) {
-//         displayValue = displayValue.toExponential(4);
-//     } else if (displayValue < 0 && displayValue > -0.0000001) {
-//         displayValue = displayValue.toExponential(3);
-//     }
-
-//     var chars = displayValue.toString().split("");
-//     var html = "";
-
-//     for (var c of chars) {
-//         if (c == '-') {
-//             html += "<span class=\"resultchar negative\">" + c + "</span>";
-//         } else if (c == '.') {
-//             html += "<span class=\"resultchar decimal\">" + c + "</span>";
-//         } else if (c == 'e') {
-//             html += "<span class=\"resultchar exponent\">e</span>";
-//         } else if (c != '+') {
-//             html += "<span class=\"resultchar digit" + c + "\">" + c + "</span>";
-//         }
-//     }
-
-//     document.getElementById("result").innerHTML = html;
-// }
-
-// function setError(n) {
-//     document.getElementById("result").innerHTML = "ERROR";
-// }
-
-// function setLoading(loading) {
-//     if (loading) {
-//         document.getElementById("loading").style.visibility = "visible";
-//     } else {
-//         document.getElementById("loading").style.visibility = "hidden";
-//     }
-
-//     var buttons = document.querySelectorAll("BUTTON");
-
-//     for (var i = 0; i < buttons.length; i++) {
-//         buttons[i].disabled = loading;
-//     }
-// }
