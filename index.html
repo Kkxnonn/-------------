@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class="cal-container">
+        <div class="cal-screen">0</div>
+        <div>
+            <button class="cal-btn cal-btn-green">MC</button>
+            <button class="cal-btn cal-btn-green">MR</button>
+            <button class="cal-btn cal-btn-green">M+</button>
+            <button class="cal-btn cal-btn-green">M-</button>
+            <button class="cal-btn cal-btn-red" onclick="ceClicked()">CE</button>
+        </div>
+        <div>
+            <button class="cal-btn cal-btn-blue" onclick="numberClicked(7)">7</button>
+            <button class="cal-btn cal-btn-blue" onclick="numberClicked(8)">8</button>
+            <button class="cal-btn cal-btn-blue" onclick="numberClicked(9)">9</button>
+            <button class="cal-btn cal-btn-green">&divide;</button>
+            <button class="cal-btn cal-btn-green">&radic;</button>
+        </div>
+        <div>
+            <button class="cal-btn cal-btn-blue" onclick="numberClicked(4)">4</button>
+            <button class="cal-btn cal-btn-blue" onclick="numberClicked(5)">5</button>
+            <button class="cal-btn cal-btn-blue" onclick="numberClicked(6)">6</button>
+            <button class="cal-btn cal-btn-green">x</button>
+            <button class="cal-btn cal-btn-green">%</button>
+        </div>
+        <div>
+            <button class="cal-btn cal-btn-blue" onclick="numberClicked(1)">1</button>
+            <button class="cal-btn cal-btn-blue" onclick="numberClicked(2)">2</button>
+            <button class="cal-btn cal-btn-blue" onclick="numberClicked(3)">3</button>
+            <button class="cal-btn cal-btn-green" onclick="operatorClicked('-')">-</button>
+            <button class="cal-btn cal-btn-green">1/x</button>
+        </div>
+        <div>
+            <button class="cal-btn cal-btn-blue" onclick="numberClicked(0)">0</button>
+            <button class="cal-btn cal-btn-blue">.</button>
+            <button class="cal-btn cal-btn-blue">+/<sub>&minus;</sub></button>
+            <button class="cal-btn cal-btn-green" onclick="operatorClicked('+')">+</button>
+            <button class="cal-btn cal-btn-green" onclick="equalClicked()">=</button>
+        </div>
+    </div>
+    <p class="footer">67150301 น.ส.สุพิชญาณ์ ชื่นชม SEC001</p>
+</body>
+
+<script src="./index.js"></script>
+
+</html>

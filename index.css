@@ -1,0 +1,54 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: xx-large;
+    text-align: center;
+}
+
+.footer {
+    margin-top: 1rem;
+    color: darkblue;
+    font-size: smaller;
+}
+
+.div {
+    border: 1px solid black;
+}
+
+.cal-screen {
+    font-size: larger;
+    border: 1px solid black;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    border-radius: 15px;
+    text-align: right;
+    background-color: rgb(129, 170, 187);
+}
+
+.cal-container {
+    width: fit-content;
+    margin: 1rem auto;
+    padding: 0.5rem;
+    border: 3px solid black;
+    border-radius: 15px;
+    background-color: rgb(228, 184, 203);
+}
+
+.cal-btn {
+    border: 1px solid black;
+    height: 2.25rem;
+    width: 2.25rem;
+    margin: 0.175rem;
+    border-radius: 15px;
+}
+
+.cal-btn-green {
+    background-color: rgb(70, 196, 137);
+}
+
+.cal-btn-red {
+    background-color: rgb(239, 56, 56);
+}
+
+.cal-btn-blue {
+    background-color: rgb(88, 133, 211);
+}
